@@ -14,7 +14,7 @@ module.exports = {
     //在 JSX 中使用双引号，设置为false
     "jsxSingleQuote": false,
     //当行字符的长度，推荐80，也有人喜欢100或者120；
-    "printWidth": 100,
+    "printWidth": 80,
     //自动识别并使用合适的行结束符
     "endOfLine": "auto"
 }

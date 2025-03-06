@@ -8,7 +8,10 @@ function App() {
   return (
     <>
       <div>
-        nsdflk
+        nihao
+        <div className='bg-#fff text-#000 h-100px w-100px border-1px border-#000  mr-10px ml-20px mt-30px mb-40px' onClick={() => {
+          console.log('nihao')
+        }} >adasdc</div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
