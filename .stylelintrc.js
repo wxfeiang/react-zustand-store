@@ -1,7 +1,6 @@
 /** @type {import('stylelint').Config} */
 export default {
-    // stylelint-config-standard 基础配置
-    // stylelint-config-recess-order 样式顺序
+
     extends: ['stylelint-config-standard', 'stylelint-config-recess-order'],
     // 不同文件类型用不同解析器
     overrides: [
