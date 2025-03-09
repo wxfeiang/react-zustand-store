@@ -1,6 +1,6 @@
 
 
-import { Divider,Card,Button } from "antd";
+import { Card,Button } from "antd";
 import { useBaseStore } from "../store/base";
 import {  } from "antd";
 export default function Base() {
@@ -10,7 +10,7 @@ export default function Base() {
   const removeAllBears = useBaseStore((state) => state.removeAllBears)
   return (
     <div className="p-4">
-      <Divider />
+
       <Card title='基础值' >
         <p>基础值 {base}</p>
         <div className="flex gap-2">

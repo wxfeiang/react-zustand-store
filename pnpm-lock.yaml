@@ -42,6 +42,9 @@ importers:
       antd:
         specifier: ^5.24.3
         version: 5.24.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      auto-zustand-selectors-hook:
+        specifier: ^3.0.1
+        version: 3.0.1(zustand@5.0.3(@types/react@19.0.10)(immer@10.1.1)(react@19.0.0))
       czg:
         specifier: ^1.11.1
         version: 1.11.1
@@ -1243,6 +1246,12 @@ packages:
     resolution: {integrity: sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==}
     engines: {node: '>= 4.5.0'}
     hasBin: true
+
+  auto-zustand-selectors-hook@3.0.1:
+    resolution: {integrity: sha512-BJHzxqdVPd0GKjieej0eALqUjXlb8SnDskeKXR85f0rEzErsXB3ttVOOZWy3IpMDle/F5F6ESAHm4tGsYP2hRw==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      zustand: '>=5.0.0'
 
   autoprefixer@9.8.8:
     resolution: {integrity: sha512-eM9d/swFopRt5gdJ7jrpCwgvEMIayITpojhkkSMRsFHYuH5bkSQ4p/9qTEHtmNudUZh22Tehu7I6CxAW0IXTKA==}
@@ -5027,6 +5036,10 @@ snapshots:
   astral-regex@2.0.0: {}
 
   atob@2.1.2: {}
+
+  auto-zustand-selectors-hook@3.0.1(zustand@5.0.3(@types/react@19.0.10)(immer@10.1.1)(react@19.0.0)):
+    dependencies:
+      zustand: 5.0.3(@types/react@19.0.10)(immer@10.1.1)(react@19.0.0)
 
   autoprefixer@9.8.8:
     dependencies:

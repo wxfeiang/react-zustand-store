@@ -1,6 +1,6 @@
 
 
-import { Divider,Card,Button } from "antd";
+import { Card,Button ,Tag} from "antd";
 import { useCatStore } from "../store/catSrore";
 import {  } from "antd";
 export default function Base() {
@@ -10,10 +10,14 @@ export default function Base() {
   const addCatSmall = useCatStore((state) => state.addCatSmall)
   const resetCat = useCatStore((state) => state.resetCat)
  const getTotalCat = useCatStore((state) => state.getTotalCat)
+ const random= Math.random()
   return (
     <div className="p-4">
-      <Divider />
-      <Card title='猫猫' >
+
+      <Card title={`猫猫1: ${random}`} >
+        <p>
+        <Tag color="magenta">组件重复渲染--useCatStore1</Tag>
+        </p>
         <p>总数: {getTotalCat()} 大猫: {bigCats} 小猫: {smallCats} </p>
         <div className="flex gap-2">
           <Button type="primary" onClick={addCatBig}>增加大猫</Button>
@@ -21,6 +25,7 @@ export default function Base() {
           <Button type="primary" onClick={resetCat}>重置</Button>
         </div>
       </Card>
+
     </div>
   )
 }
