@@ -1,130 +1,55 @@
 {
 
-    "editor.tabSize": 2,
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    // 保存文件缓慢时，可以考虑开启以下 3 行配置。
-    "vue.server.maxOldSpaceSize": 4096,
-    "vue.server.hybridMode": true,
-    "typescript.tsserver.maxTsServerMemory": 4096,
-    "files.eol": "\n",
-    "editor.guides.bracketPairs": true,
-    "editor.bracketPairColorization.enabled": true,
-    "vue.inlayHints.missingProps": true,
-    "vue.autoInsert.dotValue": true,
-    "explorer.copyRelativePathSeparator": "/",
-    "search.exclude": {
-      "**/node_modules": true,
-      "**/*.log": true,
-      "**/*.log*": true,
-      "**/bower_components": true,
-      "**/dist": true,
-      "**/elehukouben": true,
-      "**/.git": true,
-      "**/.gitignore": true,
-      "**/.svn": true,
-      "**/.DS_Store": true,
-      "**/.idea": true,
-      "**/.vscode": false,
-      "**/pnpm i.lock": true,
-      "**/tmp": true,
-      "out": true,
-      "dist": true,
-      "node_modules": true,
-      "CHANGELOG.md": true,
-      "examples": true,
-      "res": true,
-      "screenshots": true,
-      "pnpm i-error.log": true,
-      "**/.pnpm i": true
-    },
-    "files.exclude": {
-      "**/.cache": true,
-      "**/.editorconfig": true,
-      "**/.eslintcache": true,
-      "**/bower_components": true,
-      "**/.idea": true,
-      "**/tmp": true,
-      "**/.git": true,
-      "**/.svn": true,
-      "**/.hg": true,
-      "**/CVS": true,
-      "**/.DS_Store": true
-    },
-    "files.watcherExclude": {
-      "**/.git/objects/**": true,
-      "**/.git/subtree-cache/**": true,
-      "**/.vscode/**": true,
-      "**/node_modules/**": true,
-      "**/tmp/**": true,
-      "**/bower_components/**": true,
-      "**/dist/**": true,
-      "**/pnpm i.lock": true
-    },
-    "eslint.useFlatConfig": true,
-    "stylelint.enable": true,
-    "stylelint.validate": ["css", "less", "postcss", "scss", "vue", "sass"],
-    "path-intellisense.mappings": {
-      "@/": "${workspaceRoot}/src"
-    },
-    "i18n-ally.localesPaths": ["src/locales/lang"],
-    "i18n-ally.keystyle": "nested",
-    "i18n-ally.sortKeys": true,
-    "i18n-ally.namespace": true,
-    "i18n-ally.pathMatcher": "{locale}/{namespaces}.{ext}",
-    "i18n-ally.enabledParsers": ["json"],
-    "i18n-ally.sourceLanguage": "en",
-    "i18n-ally.displayLanguage": "zh-CN",
-    "i18n-ally.enabledFrameworks": ["vue", "react"],
-    // Disable the default formatter, use eslint instead
-    "prettier.enable": false,
-    "editor.formatOnSave": false,
-
-    // Auto fix
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit",
-      "source.organizeImports": "never",
-      "source.fixAll.stylelint": "explicit"
-    },
-
-    // Silent the stylistic rules in you IDE, but still auto fix them
-    "eslint.rules.customizations": [
-      { "rule": "style/*", "severity": "off", "fixable": true },
-      { "rule": "format/*", "severity": "off", "fixable": true },
-      { "rule": "*-indent", "severity": "off", "fixable": true },
-      { "rule": "*-spacing", "severity": "off", "fixable": true },
-      { "rule": "*-spaces", "severity": "off", "fixable": true },
-      { "rule": "*-order", "severity": "off", "fixable": true },
-      { "rule": "*-dangle", "severity": "off", "fixable": true },
-      { "rule": "*-newline", "severity": "off", "fixable": true },
-      { "rule": "*quotes", "severity": "off", "fixable": true },
-      { "rule": "*semi", "severity": "off", "fixable": true }
-    ],
-    "css.validate": true,
-    "less.validate": true,
-    "scss.validate": true,
-    // Enable eslint for all supported languages
-    "eslint.validate": [
-      "javascript",
-      "javascriptreact",
-      "typescript",
-      "typescriptreact",
-      "vue",
-      "html",
-      "markdown",
-      "json",
-      "jsonc",
-      "yaml",
-      "toml",
-      "xml",
-      "gql",
-      "graphql",
-      "astro",
-      "css",
-      "less",
-      "scss",
-      "pcss",
-      "postcss"
-    ],
+     // 默认格式化工具选择prettier
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // 保存的时候自动格式化
+  "editor.formatOnSave": true,
+  //开启自动修复
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
+  },
+  // 配置stylelint检查的文件类型范围
+  "stylelint.validate": ["css", "scss", "vue", "html"], // 与package.json的scripts对应
+  "stylelint.enable": true,
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[dotenv]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // 配置语言的文件关联
+  "files.associations": {
+    "pages.json": "jsonc", // pages.json 可以写注释
+    "manifest.json": "jsonc" // manifest.json 可以写注释
+  },
+  "cSpell.words": [
+    "climblee",
+    "commitlint",
+    "dcloudio",
+    "iconfont",
+    "qrcode",
+    "refresherrefresh",
+    "scrolltolower",
+    "tabbar",
+    "unibest",
+    "uvui",
+    "WechatMiniprogram"
+  ],
+  "typescript.tsdk": "node_modules\\typescript\\lib",
     // 控制相关文件嵌套展示
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
