@@ -4,16 +4,19 @@ import { Card } from "antd";
 import { useEffect, useState } from "react";
 import { useFoodsStore } from "../store/food";
 import { shallow } from "zustand/shallow";
+import { useBaseStore } from "../store/base";
 const Foods2: React.FC = () => {
 
   const random = Math.random()
   // 第一种
-  const fish = useFoodsStore((state) => state.fish)
-  const [baColor, setBaColor] = useState<'bg-red-100' | 'bg-blue-300'>(
+  // const fish = useFoodsStore((state) => state.fish)
 
+  const [baColor, setBaColor] = useState<'bg-red-100' | 'bg-blue-100'>(
+    useFoodsStore.getState().fish > 5 ? "bg-red-100" : "bg-blue-100"
   )
 
   // 第二种  必要时重新渲染
+  const { base } = useBaseStore();
   useEffect(() => {
     // const unsubscribe = useFoodsStore.subscribe((state, perSatae) => {
     //   if (perSatae.fish <= 5 && state.fish > 5) {
@@ -26,19 +29,24 @@ const Foods2: React.FC = () => {
     // store 中开启方法
     const unsubscribe = useFoodsStore.subscribe(
       (state) => state.fish,
-      (fish, perFish) => {
-        console.log('fish', fish)
-        console.log('perFish', perFish)
-        if (perFish <= 5 && fish > 5) {
-          setBaColor('bg-red-100')
-        } else if (perFish > 5 && fish <= 5) {
-          setBaColor('bg-blue-300')
-        }
+      (fish, prevFish) => {
+        // if (fish == prevFish) {
+        //   if (fish <= 5) {
+        //     setBgColor("lightpink");
+        //   } else {
+        //     setBgColor("lightgreen");
+        //   }
+        // }
 
+        if (prevFish <= 5 && fish > 5) {
+          setBaColor("bg-red-100");
+        } else if (prevFish > 5 && fish <= 5) {
+          setBaColor("bg-blue-100");
+        }
       },
       {
         equalityFn: shallow,
-        fireImmediately: true  // 是否立即执行
+        fireImmediately: true,
       }
     )
 
@@ -51,7 +59,7 @@ const Foods2: React.FC = () => {
     <div className="p-4">
 
       <Card title='基础值' className={baColor}>
-        <p>食物 {fish}</p>
+        <p>base:  {base}</p>
         <p>random: {random}</p>
         <div className="font-size-12px color-bluegray ">
           第一种显示的时候

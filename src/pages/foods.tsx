@@ -4,15 +4,12 @@ import { useFoodsStore } from '../store/food'
 
 const Foods: React.FC = () => {
   const { fish, addOneFish, removeOnefilsh, removeAllFish } = useFoodsStore()
-  const random = Math.random()
-
-
 
   return (
     <div className='p-4'>
       <div >
         <Card title='状态订阅' >
-          <p>random: {random}</p>
+
           <p>食物：  {fish}</p>
           <div className="flex gap-2">
             <Button type="primary" onClick={addOneFish}>增加</Button>
