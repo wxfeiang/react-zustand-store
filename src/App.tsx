@@ -7,6 +7,7 @@ import CatBox3 from './pages/catBox3'
 import CatBox4 from './pages/catBox4'
 import Foods from './pages/foods'
 import Foods2 from './pages/foods2'
+import Foods3 from './pages/foods3'
 function App() {
   return (
     <>
@@ -41,6 +42,7 @@ function App() {
         <div className='flex gap-4'>
           <Foods2 />
           <Foods />
+          <Foods3 />
         </div>
 
 
