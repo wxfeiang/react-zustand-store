@@ -1,15 +1,15 @@
-import { create, } from 'zustand'
-import { immer } from 'zustand/middleware/immer'
+import { create } from 'zustand';
+import { immer } from 'zustand/middleware/immer';
 
 interface CatStore {
-  cats:{
-    bigCats:number,
-    smallCats:number
-  }
-  addCatBig: () => void
-  addCatSmall: () => void
-  resetCat: () => void
-  getTotalCat: () => number
+  cats: {
+    bigCats: number;
+    smallCats: number;
+  };
+  addCatBig: () => void;
+  addCatSmall: () => void;
+  resetCat: () => void;
+  getTotalCat: () => number;
 }
 
 // cat
@@ -45,25 +45,30 @@ interface CatStore {
 
 // 简化写法 中间件
 
- export const useCatStore = create<CatStore>()(
-  immer((set,get) => ({
+export const useCatStore = create<CatStore>()(
+  immer((set, get) => ({
     cats: {
       bigCats: 0,
-      smallCats: 0
+      smallCats: 0,
     },
-    addCatBig: () => set((state) => {
-      state.cats.bigCats += 1
-    }),
-    addCatSmall: () => set((state) => {
-      state.cats.smallCats += 1
-    }),
-    resetCat: () => set(() => ({ cats: {
-      bigCats: 0,
-      smallCats: 0
-    } })),
+    addCatBig: () =>
+      set((state) => {
+        state.cats.bigCats += 1;
+      }),
+    addCatSmall: () =>
+      set((state) => {
+        state.cats.smallCats += 1;
+      }),
+    resetCat: () =>
+      set(() => ({
+        cats: {
+          bigCats: 0,
+          smallCats: 0,
+        },
+      })),
     getTotalCat: () => {
-      const { bigCats, smallCats } = get().cats
-      return bigCats + smallCats
-    }
-  }))
-)
+      const { bigCats, smallCats } = get().cats;
+      return bigCats + smallCats;
+    },
+  })),
+);
