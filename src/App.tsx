@@ -9,7 +9,7 @@ function App() {
 
   return (
     <>
-      <div className='p-4'>
+      <div className='p-4 bg-bluegray rounded-10px'>
         <div className='bg-red-500 text-center p-4 color-#fff'>
           zustand demo
         </div>
@@ -17,7 +17,7 @@ function App() {
           <Base />
           <Base2 />
         </div>
-        <Divider>组件渲染比对</Divider>
+        <Divider>组件渲染比对 （2和4 操作一样） （3 只使用方法，不会重复渲染）</Divider>
         <div className='flex gap-4'>
           <CatBox />
           <div className='text-center pt-30px'>

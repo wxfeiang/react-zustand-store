@@ -29,6 +29,9 @@ const CatBox4: React.FC = () => {
           <Button type="primary" onClick={addCatSmall}>增加小猫</Button>
           <Button type="primary" onClick={resetCat}>重置</Button> */}
         </div>
+        <div className="font-size-12px color-bluegray py-10pxs">
+          只使用一个值 小猫数量: {smallCats} 变化才会渲染---
+        </div>
         <p>
           <Tag color="magenta">只需要观察随机数的变化</Tag>
         </p>
