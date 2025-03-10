@@ -2,7 +2,7 @@
 
 import { Button, Card, Tag } from "antd";
 import { useCatStore } from "../store/catSrore";
-export default function Base() {
+const CatBox: React.FC = () => {
   const bigCats = useCatStore((state) => state.cats.bigCats)
   const smallCats = useCatStore((state) => state.cats.smallCats)
   const addCatBig = useCatStore((state) => state.addCatBig)
@@ -28,3 +28,5 @@ export default function Base() {
     </div>
   )
 }
+
+export default CatBox;

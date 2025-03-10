@@ -4,7 +4,7 @@ import { Card, Tag } from "antd";
 import { useShallow } from 'zustand/react/shallow';
 import { useCatStore } from "../store/catSrore";
 
-export default function Base() {
+const CatBox4: React.FC = () => {
   //为会在组件导入所有状态，会导致组件频繁re-render 所以不建议使用。但是zustand文档中建议使用的useShallow
   //FIX: 不能使用嵌套的数据哦
 
@@ -37,3 +37,5 @@ export default function Base() {
     </div>
   )
 }
+
+export default CatBox4;

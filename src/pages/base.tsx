@@ -1,9 +1,8 @@
 
 
-import { Card,Button } from "antd";
+import { Button, Card } from "antd";
 import { useBaseStore } from "../store/base";
-import {  } from "antd";
-export default function Base() {
+const Base: React.FC = () => {
   const base = useBaseStore((state) => state.base)
   const increasePopulation = useBaseStore((state) => state.increasePopulation)
   const decreasePopulation = useBaseStore((state) => state.decreasePopulation)
@@ -23,3 +22,5 @@ export default function Base() {
     </div>
   )
 }
+
+export default Base;

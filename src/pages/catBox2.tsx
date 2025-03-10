@@ -2,7 +2,7 @@
 
 import { Card, Tag } from "antd";
 import { useCatStore } from "../store/catSrore";
-export default function Base() {
+const CatBox2: React.FC = () => {
   const bigCats = useCatStore((state) => state.cats.bigCats)
 
   const random = Math.random()
@@ -22,3 +22,5 @@ export default function Base() {
     </div>
   )
 }
+
+export default CatBox2;

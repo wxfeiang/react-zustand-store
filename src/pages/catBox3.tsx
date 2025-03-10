@@ -4,8 +4,7 @@ import { Button, Card, Tag } from "antd";
 import { createSelectorFunctions } from 'auto-zustand-selectors-hook';
 import { useCatStore } from "../store/catSrore";
 
-import { } from "antd";
-export default function catBox3() {
+const CatBox3: React.FC = () => {
   const useStore = createSelectorFunctions(useCatStore);
   // createSelectorFunctions 可以直接作用于useCatStore 放到仓库位置引入
   //FIX: 不能使用嵌套的数据哦
@@ -36,3 +35,5 @@ export default function catBox3() {
     </div>
   )
 }
+
+export default CatBox3;

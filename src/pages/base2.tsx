@@ -2,7 +2,7 @@
 
 import { Button, Card } from "antd";
 import { useBaseStore } from "../store/base2";
-export default function Base() {
+const Base2: React.FC = () => {
   const base = useBaseStore((state) => state.base)
   const size = useBaseStore((state) => state.size)
   const name = useBaseStore((state) => state.name)
@@ -40,3 +40,5 @@ export default function Base() {
     </div>
   )
 }
+
+export default Base2;
