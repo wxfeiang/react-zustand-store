@@ -1,0 +1,23 @@
+{
+	"React Function Component": {
+	   "prefix": "rfc",
+	   "body": [
+		 "import React, { useEffect } from 'react' ",
+		 "interface Props {",
+		 "  ${1:name}: string",
+		 "}",
+		 "const ${1:ComponentName}: React.FC<Props>  = ({ name }) => {",
+		 "  console.log('不是组件的话删掉 props ===', ) ",
+		 "  useEffect(() => { ",
+         "      console.log('执行了', )" ,
+         "    }, [])  ",
+		 "  return (",
+		 "    <div>",
+		 "      ${1:ComponentName}",
+		 "    </div>",
+		 "  );",
+		 "};",
+		 "export default ${1:ComponentName};"
+	   ]
+	 }
+   }
