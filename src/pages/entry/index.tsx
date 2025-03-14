@@ -1,11 +1,11 @@
-import { Outlet } from 'react-router-dom'
-import { Layout } from 'antd'
-const { Content, Sider } = Layout
+import { Outlet } from 'react-router-dom';
+import { Layout } from 'antd';
+const { Content, Sider } = Layout;
 
 function Entry() {
   return (
-    <Layout >
-      <div className='h-70px  bg-blue-500'>Header</div>
+    <Layout>
+      <div className="h-70px ">Header {Math.random()}</div>
       <Layout>
         <Sider />
         <Layout>
@@ -18,7 +18,7 @@ function Entry() {
         </Layout>
       </Layout>
     </Layout>
-  )
+  );
 }
 
-export default Entry
+export default Entry;

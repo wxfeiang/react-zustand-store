@@ -5,14 +5,14 @@ import { immer } from 'zustand/middleware/immer';
 // 中间件顺序
 //  immer ----> devtools ----> subscribeWithSelector ----> persist
 // 通过setstore / getstore 来操作store 简化抽离
-const initialState =  {
+const initialState = {
   fish: 0,
   // 可以随机拓展字段
 }
 
-const addOneFish =()=> useFoodsStore.setState((state)=>({fish:state.fish+1}))
-const removeOnefilsh =()=> useFoodsStore.setState((state)=>({fish:state.fish-1}))
-const removeAllFish =()=> useFoodsStore.setState(()=>({fish:0}))
+const addOneFish = () => useFoodsStore.setState((state) => ({ fish: state.fish + 1 }))
+const removeOnefilsh = () => useFoodsStore.setState((state) => ({ fish: state.fish - 1 }))
+const removeAllFish = () => useFoodsStore.setState(() => ({ fish: 0 }))
 const useFoodsStore = create<typeof initialState>()(
   immer(
     subscribeWithSelector(
