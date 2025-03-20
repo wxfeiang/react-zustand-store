@@ -12,6 +12,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@ant-design/pro-components": "^2.8.6",
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@unocss/reset": "66.1.0-beta.6",
     "amfe-flexible": "^2.2.1",
@@ -20,12 +21,14 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@ant-design/icons": "^5.6.1",
     "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",
     "@eslint/js": "^9.21.0",
     "@iconify/json": "^2.2.314",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
+    "@unocss/preset-rem-to-px": "66.1.0-beta.6",
     "@vitejs/plugin-react-swc": "^3.8.0",
     "antd": "^5.24.3",
     "auto-zustand-selectors-hook": "^3.0.1",

@@ -4,6 +4,7 @@ import { Spin } from 'antd'
 import Login from '@/pages/Login'
 import Home from '@/pages/Home'
 import Zustand from '@/pages/Zustand'
+import Main from '@/pages/Main'
 
 // 全局路由
 function globalRoute() {
@@ -36,6 +37,7 @@ function globalRoute() {
           path: '/',
           element: <Navigate to="/home" />,
         },
+
         {
           path: '/zustand',
           element: <Zustand />,
@@ -48,6 +50,11 @@ function globalRoute() {
         },
       ],
     },
+    {
+      path: '/main',
+      element: <Main />,
+    },
+
   ])
 }
 
