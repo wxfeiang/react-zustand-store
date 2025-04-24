@@ -6,6 +6,9 @@ import Home from '@/pages/Home';
 import Zustand from '@/pages/Zustand';
 import Main from '@/pages/Main';
 import System from '@/pages/system';
+import History from '@/pages/Apifox/History';
+
+import Entryfox from '@/pages/entryfox';
 
 // 全局路由
 function globalRoute() {
@@ -34,12 +37,6 @@ function globalRoute() {
           element: <Home />,
         },
         {
-          // 如果URL没有"#路由"，跳转Home页面
-          path: '/',
-          element: <Navigate to="/home" />,
-        },
-
-        {
           path: '/zustand',
           element: <Zustand />,
         },
@@ -53,6 +50,26 @@ function globalRoute() {
     {
       path: '/main',
       element: <Main />,
+    },
+    {
+      path: '/api',
+      element: (
+        // 懒加载过程中先使用Spin组件占位
+        <Suspense fallback={
+          <div className='size-full flex justify-center align-center'>
+            <Spin />
+          </div>
+
+        } >
+          <Entryfox />
+        </Suspense>
+      ),
+      children: [
+        {
+          path: 'history',
+          element: <History />,
+        }
+      ]
     },
     {
       path: 'system',
