@@ -5,6 +5,7 @@ import 'rest-css'
 
 import 'virtual:uno.css';
 import 'amfe-flexible';
+import './assets/style.css'
 
 import App from './App.tsx';
 

@@ -13,12 +13,10 @@ type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
   {
-    key: '1', icon: <PieChartOutlined />, label: '历史记录',
-    children: [
-      { key: '9', label: 'Option 9' },
-    ],
+    key: '/api/history', icon: <PieChartOutlined />, label: '历史记录',
+
   },
-  { key: '2', icon: <DesktopOutlined />, label: '系统设置', },
+  { key: '/api/sysTem', icon: <DesktopOutlined />, label: '系统设置', },
   // { key: '3', icon: <ContainerOutlined />, label: 'Option 3' },
   // {
   //   key: 'sub2',
@@ -39,17 +37,24 @@ const items: MenuItem[] = [
   // },
 ];
 
+
 const ApiFox: React.FC = () => {
   const navigate = useNavigate();
+  const routeTo = (e) => {
+    console.log('🥔[item]:', e);
+    navigate(e.key)
+  }
   return (
-    <Menu
-      defaultSelectedKeys={['1']}
-      mode="inline"
-      theme="dark"
-      inlineCollapsed={true}
-      items={items}
-      onClick={() => navigate('/api/history')}
-    />
+    <>
+      <Menu
+        defaultSelectedKeys={['1']}
+        mode="inline"
+        theme="dark"
+        inlineCollapsed={true}
+        items={items}
+        onClick={(e) => routeTo(e)}
+      />
+    </>
 
   );
 };

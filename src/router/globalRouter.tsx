@@ -5,10 +5,11 @@ import Login from '@/pages/Login';
 import Home from '@/pages/Home';
 import Zustand from '@/pages/Zustand';
 import Main from '@/pages/Main';
-import System from '@/pages/system';
-import History from '@/pages/Apifox/History';
+import System from '@/pages/SysTem'
+import History from '@/pages/History';
 
 import Entryfox from '@/pages/entryfox';
+import ApiSysTem from '@/pages/ApiSysTem';
 
 // 全局路由
 function globalRoute() {
@@ -68,6 +69,10 @@ function globalRoute() {
         {
           path: 'history',
           element: <History />,
+        },
+        {
+          path: 'sysTem',
+          element: <ApiSysTem />,
         }
       ]
     },
