@@ -5,11 +5,8 @@ import Sider from 'antd/es/layout/Sider';
 import { Content } from 'antd/es/layout/layout';
 
 const contentStyle: React.CSSProperties = {
-  textAlign: 'center',
-  minHeight: 120,
-  lineHeight: '120px',
-  color: '#fff',
-  backgroundColor: '#333',
+  padding: '10px',
+  backgroundColor: '#f5f5f5',
 };
 
 const siderStyle: React.CSSProperties = {
