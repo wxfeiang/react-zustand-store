@@ -26,7 +26,7 @@ function Entryfox() {
 
   return (
     <Layout style={layoutStyle}>
-      <Sider style={siderStyle} className='max-w-80px! min-w-80px!'>
+      <Sider style={siderStyle} >
         <ApiFox />
       </Sider>
       <Content style={contentStyle}>  <Outlet /></Content>

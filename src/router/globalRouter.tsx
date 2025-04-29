@@ -10,6 +10,7 @@ import History from '@/pages/History';
 
 import Entryfox from '@/pages/entryfox';
 import ApiSysTem from '@/pages/ApiSysTem';
+import About from '@/pages/About';
 
 // 全局路由
 function globalRoute() {
@@ -73,6 +74,10 @@ function globalRoute() {
         {
           path: 'sysTem',
           element: <ApiSysTem />,
+        },
+        {
+          path: 'about',
+          element: <About />,
         }
       ]
     },
