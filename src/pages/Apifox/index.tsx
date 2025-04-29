@@ -19,7 +19,7 @@ const items: MenuItem[] = [
     icon: <AppstoreOutlined />,
     children: [
       { key: '/api/sysTem', label: '环境变量' },
-      { key: '/api/globParams', label: '全局参数' },
+      { key: '/api/globalParams', label: '全局参数' },
       {
         key: '/api/about',
         label: '关于我们',

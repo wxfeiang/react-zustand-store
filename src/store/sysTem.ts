@@ -8,28 +8,53 @@ export interface SysTemState {
   url: string
 }
 const initialState = {
-  dev: {
-    key: 'dev',
-    name: '开发环境',
-    type: 'dev',
-    url: 'http://localhost:3000',
+  env: {
+    dev: {
+      key: 'dev',
+      name: '开发环境',
+      type: 'dev',
+      url: 'http://localhost:3000',
+    },
+    prod: {
+      key: 'prod',
+      name: '生产环境',
+      type: 'prod',
+      url: 'http://localhost:8888',
+    },
   },
-  prod: {
-    key: 'prod',
-    name: '生产环境',
-    type: 'prod',
-    url: 'http://localhost:8888',
-  },
+  goloabaParams: {
+    Authorization: {
+      key: 'Authorization',
+      name: 'Authorization',
+      value: "qingqiutoken",
+      position: 'header',
+      status: true,
+
+    },
+    skin: {
+      key: 'skin',
+      name: 'skin',
+      value: "skin",
+      position: 'header',
+      status: true,
+
+    }
+
+  }
+
 
 }
 
 const updateSysTem = (data: SysTemState) => useSysTemStore.setState((state) => {
   if (data.type === 'dev') {
-    return { ...state, dev: { ...state.dev, ...data } }
+    return { ...state, dev: { ...state.env.dev, ...data } }
   }
   if (data.type === 'prod') {
-    return { ...state, prod: { ...state.prod, ...data } }
+    return { ...state, prod: { ...state.env.prod, ...data } }
   }
+})
+const updateGlobalParams = (data: SysTemState) => useSysTemStore.setState((state) => {
+  return { ...state, goloabaParams: { ...data } }
 })
 const useSysTemStore = create<typeof initialState>()(
   immer(
@@ -46,4 +71,4 @@ const useSysTemStore = create<typeof initialState>()(
   ),
 );
 
-export { useSysTemStore, updateSysTem }
+export { useSysTemStore, updateSysTem, updateGlobalParams }

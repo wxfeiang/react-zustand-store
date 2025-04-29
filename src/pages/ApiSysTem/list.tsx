@@ -3,7 +3,8 @@ import type { GetRef, InputRef, TableProps } from 'antd';
 import { Form, Input, Table, } from 'antd';
 type FormInstance<T> = GetRef<typeof Form<T>>;
 
-const EditableContext = React.createContext<FormInstance<never> | null>(null);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
 interface Item {
   key: string;

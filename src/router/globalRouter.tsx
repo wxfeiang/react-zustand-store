@@ -11,6 +11,7 @@ import History from '@/pages/History';
 import Entryfox from '@/pages/entryfox';
 import ApiSysTem from '@/pages/ApiSysTem';
 import About from '@/pages/About';
+import GolobalParams from '@/pages/GolobalParams';
 
 // 全局路由
 function globalRoute() {
@@ -74,6 +75,10 @@ function globalRoute() {
         {
           path: 'sysTem',
           element: <ApiSysTem />,
+        },
+        {
+          path: 'globalParams',
+          element: <GolobalParams />,
         },
         {
           path: 'about',
