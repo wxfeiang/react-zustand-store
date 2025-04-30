@@ -7,6 +7,13 @@ export interface SysTemState {
   type: string
   url: string
 }
+export interface GolobalParamsProps {
+  key: React.Key;
+  name: string;
+  value: string;
+  position: string;
+  status: boolean;
+}
 const initialState = {
   env: {
     dev: {
@@ -27,15 +34,15 @@ const initialState = {
       key: 'Authorization',
       name: 'Authorization',
       value: "qingqiutoken",
-      position: 'header',
+      position: 'Header',
       status: true,
 
     },
     skin: {
       key: 'skin',
       name: 'skin',
-      value: "skin",
-      position: 'header',
+      value: 'skin',
+      position: 'Header',
       status: true,
 
     }
@@ -47,15 +54,17 @@ const initialState = {
 
 const updateSysTem = (data: SysTemState) => useSysTemStore.setState((state) => {
   if (data.type === 'dev') {
-    return { ...state, dev: { ...state.env.dev, ...data } }
+    return { ...state, env: { ...state.env, dev: { ...state.env.dev, ...data } } }
   }
   if (data.type === 'prod') {
-    return { ...state, prod: { ...state.env.prod, ...data } }
+    return { ...state, env: { ...state.env, prod: { ...state.env.prod, ...data } } }
   }
+
 })
-const updateGlobalParams = (data: SysTemState) => useSysTemStore.setState((state) => {
+const updateGlobalParams = (data: GolobalParamsProps[]) => useSysTemStore.setState((state) => {
   return { ...state, goloabaParams: { ...data } }
 })
+
 const useSysTemStore = create<typeof initialState>()(
   immer(
     subscribeWithSelector(

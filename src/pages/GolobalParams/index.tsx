@@ -11,6 +11,7 @@ const GolobalParams: React.FC = () => {
   return <>
     <Card title='全局参数' className='my-[10px]'>
       <List data={data} update={(val) => updateGlobalParams(val)} />
+
     </Card>
 
   </>

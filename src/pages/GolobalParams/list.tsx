@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import type { GetRef, InputRef, TableProps } from 'antd';
 import { Button, Form, Input, Select, Switch, Table, } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
+import { uid } from "radash";
+
 type FormInstance<T> = GetRef<typeof Form<T>>;
 
 
-const EditableContext = React.createContext<FormInstance<unknown> | null>(null);
+const EditableContext = React.createContext<FormInstance<never> | null>(null);
 
 interface Item {
   key: string;
@@ -49,7 +52,7 @@ const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
 }) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef<InputRef>(null);
-  const switchRef = useRef<SwitchRef>(null);
+
   const form = useContext(EditableContext)!;
 
   useEffect(() => {
@@ -72,26 +75,11 @@ const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
       console.log('Save failed:', errInfo);
     }
   };
-  const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
-  }
-  const onChange = (checked: boolean) => {
-    console.log(`switch to ${checked}`);
-  }
+
   let childNode = children;
   if (editable) {
     if (editing) {
-      if (dataIndex === 'status') {
-        childNode = (
-          <Form.Item
-            style={{ margin: 0 }}
-            name={dataIndex}
-            rules={[{ required: true, message: `${title} is required.` }]}
-          >
-            <Switch defaultChecked onChange={onChange} ref={switchRef} />
-          </Form.Item>
-        )
-      } else if (dataIndex === 'position') {
+      if (dataIndex === 'position') {
         childNode = (
           <Form.Item
             style={{ margin: 0 }}
@@ -99,9 +87,8 @@ const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
             rules={[{ required: true, message: `${title} is required.` }]}
           >
             <Select
-              defaultValue="Header"
-              onChange={handleChange}
-              className='w-100%!'
+              onChange={save}
+              onBlur={save}
               options={[
                 { value: 'Header', label: 'Header' },
                 { value: 'Body', label: 'Body' },
@@ -143,8 +130,6 @@ interface DataType {
   value: string;
   position: string;
   status: boolean;
-
-
 }
 
 type ColumnTypes = Exclude<TableProps<DataType>['columns'], undefined>;
@@ -157,18 +142,17 @@ interface ListProps {
 
 const List: React.FC<ListProps> = (props) => {
   const [dataSource, setDataSource] = useState<DataType[]>(props.data);
-
   const defaultColumns: (ColumnTypes[number] & { editable?: boolean; dataIndex: string })[] = [
     {
       title: '参数key',
       dataIndex: 'name',
-      width: '20%',
+      width: 200,
       editable: true,
     },
     {
       title: '入参位置',
       dataIndex: 'position',
-      width: '20%',
+      width: 200,
       editable: true,
     },
     {
@@ -179,22 +163,41 @@ const List: React.FC<ListProps> = (props) => {
     {
       title: '是否启用',
       dataIndex: 'status',
-      editable: true,
+      width: 120,
+      render: (_, record) => (
+        <Switch
+          checked={record.status}
+          checkedChildren="是" unCheckedChildren="否"
+          onChange={(checked) => handleSwitchChange(checked, record)}
+        />
+      ),
+    },
+    {
+      title: '操作',
+      dataIndex: 'operation',
+      width: 120,
+      render: (_, record) =>
+        dataSource.length >= 1 ? (
+          <DeleteOutlined className="color-[#eb2f96]" onClick={() => handleDelete(record.key)}/>
+        ) : null,
     },
   ];
-  const [count, setCount] = useState(props.data.length + 1);
-
+  const [count, setCount] = useState(uid(8));
   const handleAdd = () => {
     const newData: DataType = {
       key: `key  ${count}`,
-      name: "name",
-      position: 'header',
+      name: `name ${count}`,
+      position: 'Header',
       value: "val",
       status: true,
     };
     setDataSource([...dataSource, newData]);
-    setCount(count + 1);
+    setCount(uid(8));
   };
+  const handleSwitchChange =(check:boolean,row: DataType)=>{
+    row = {...row , status: check}
+    handleSave(row)
+  }
   const handleSave = (row: DataType) => {
     const newData = [...dataSource];
     const index = newData.findIndex((item) => row.key === item.key);
@@ -205,10 +208,12 @@ const List: React.FC<ListProps> = (props) => {
     });
     setDataSource(newData);
     // 存储到本地
-    console.log('🍱', newData);
     props.update(newData);
-
-
+  };
+  const handleDelete = (key: React.Key) => {
+    const newData = dataSource.filter((item) => item.key !== key);
+    setDataSource(newData);
+    props.update(newData);
   };
 
   const components = {
@@ -219,7 +224,7 @@ const List: React.FC<ListProps> = (props) => {
   };
 
   const columns = defaultColumns.map((col) => {
-    console.log('🥥[col]:', col);
+
     if (!col.editable) {
       return col;
     }
@@ -230,7 +235,6 @@ const List: React.FC<ListProps> = (props) => {
         editable: col.editable,
         dataIndex: col.dataIndex,
         title: col.title,
-
         handleSave,
       }),
     };
@@ -248,8 +252,8 @@ const List: React.FC<ListProps> = (props) => {
         dataSource={dataSource}
         columns={columns as ColumnTypes}
         pagination={false}
+        scroll={{ x: 'max-content', y: 300 }}
       />
-      <div className='mt-[10px]'>点击单元格即可编辑</div>
     </div>
   );
 };
