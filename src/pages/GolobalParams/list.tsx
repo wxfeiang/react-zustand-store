@@ -7,7 +7,7 @@ import { uid } from "radash";
 type FormInstance<T> = GetRef<typeof Form<T>>;
 
 
-const EditableContext = React.createContext<FormInstance<never> | null>(null);
+const EditableContext = React.createContext<FormInstance<Item> | null>(null);
 
 interface Item {
   key: string;
@@ -15,14 +15,10 @@ interface Item {
   value: string;
   position: string;
   status: boolean;
-
 }
 
-interface EditableRowProps {
-  index: number;
-}
 
-const EditableRow: React.FC<EditableRowProps> = ({ ...props }) => {
+const EditableRow: React.FC<Item> = ({ ...props }) => {
   const [form] = Form.useForm();
   return (
     <Form form={form} component={false}>
@@ -128,7 +124,7 @@ interface DataType {
   key: React.Key;
   name: string;
   value: string;
-  position: string;
+  position: "Header"| "Body" | "Query";
   status: boolean;
 }
 
@@ -185,7 +181,7 @@ const List: React.FC<ListProps> = (props) => {
   const [count, setCount] = useState(uid(8));
   const handleAdd = () => {
     const newData: DataType = {
-      key: `key  ${count}`,
+      key: count,
       name: `name ${count}`,
       position: 'Header',
       value: "val",

@@ -3,8 +3,8 @@ import type { GetRef, InputRef, TableProps } from 'antd';
 import { Form, Input, Table, } from 'antd';
 type FormInstance<T> = GetRef<typeof Form<T>>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const EditableContext = React.createContext<FormInstance<any> | null>(null);
+
+const EditableContext = React.createContext<FormInstance<Item> | null>(null);
 
 interface Item {
   key: string;
@@ -12,11 +12,7 @@ interface Item {
   url: string;
 }
 
-interface EditableRowProps {
-  index: number;
-}
-
-const EditableRow: React.FC<EditableRowProps> = ({ ...props }) => {
+const EditableRow: React.FC<Item> = ({ ...props }) => {
   const [form] = Form.useForm();
   return (
     <Form form={form} component={false}>
@@ -100,26 +96,20 @@ interface DataType {
   key: React.Key;
   name: string;
   url: string;
-
+  type: string
 }
 
 type ColumnTypes = Exclude<TableProps<DataType>['columns'], undefined>;
 
-interface EditableRowProps {
-  url: string;
-  type: string;
-  update: (params: Omit<EditableRowProps, "update">) => void;
+interface ListProps {
+  data: Omit<DataType, 'key'>;
+  update: (data: Omit<DataType, 'key'>) => void;
+
 }
-const List: React.FC<EditableRowProps> = (props) => {
+const List: React.FC<ListProps> = (props) => {
 
 
-  const [dataSource, setDataSource] = useState<DataType[]>([
-    {
-      key: props.type,
-      name: props.type,
-      url: props.url,
-    },
-  ]);
+  const [dataSource, setDataSource] = useState<DataType[]>([{...props.data, key:props.data.type}]);
 
   const defaultColumns: (ColumnTypes[number] & { editable?: boolean; dataIndex: string })[] = [
     {
@@ -144,7 +134,7 @@ const List: React.FC<EditableRowProps> = (props) => {
     });
     setDataSource(newData);
     // 存储到本地
-    props.update({ type: newData[0].name, url: newData[0].url, index: index })
+    props.update({ ...newData[0]})
 
   };
 

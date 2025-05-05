@@ -7,13 +7,13 @@ import { updateSysTem } from "../../store/sysTem";
 
 const ApiSysTem: React.FC = () => {
   const env = useSysTemStore((state) => state.env);
-  const envList = listify(env, (key, value) => ({ ...value })); // 将对象转换为数组
+  const envList = listify(env, (_key, value) => ({ ...value })); // 将对象转换为数组
   return <>
     {
       envList.map((item, index: number) => {
         return (
           <Card title={item.name} className='my-[10px]' key={index}>
-            <List type={item.type} url={item.url} index={index} update={(data) => updateSysTem(data)} />
+            <List data={item} update={(data) => updateSysTem(data)} />
           </Card>
         )
       })
