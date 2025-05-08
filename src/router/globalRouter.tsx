@@ -12,6 +12,7 @@ import Entryfox from '@/pages/entryfox';
 import ApiSysTem from '@/pages/ApiSysTem';
 import About from '@/pages/About';
 import GolobalParams from '@/pages/GolobalParams';
+import Action from '@/pages/Action';
 
 // 全局路由
 function globalRoute() {
@@ -83,6 +84,10 @@ function globalRoute() {
         {
           path: 'about',
           element: <About />,
+        },
+        {
+          path: 'action',
+          element: <Action />,
         }
       ]
     },

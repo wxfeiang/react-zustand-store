@@ -24,6 +24,10 @@ const items: MenuItem[] = [
         key: '/api/about',
         label: '关于我们',
       },
+      {
+        key: '/api/action',
+        label: '接口开发',
+      },
     ],
   },
 ];

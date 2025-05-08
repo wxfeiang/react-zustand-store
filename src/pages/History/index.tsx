@@ -7,7 +7,7 @@ const History: React.FC = () => {
   return (
     <>
       <div>
-        historyasfdvaerfvhn'aeorjdfopaejdfmiop'njmaedrip'
+        历史记录表
       </div>
     </>
   );
