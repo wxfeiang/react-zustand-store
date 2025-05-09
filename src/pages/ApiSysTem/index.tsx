@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, } from 'antd';
+import { Card, message, } from 'antd';
 import List, { } from './list';
 import { updateCurrentEnv, useSysTemStore } from '@/store/sysTem';
 import { listify } from "radash";
@@ -7,13 +7,19 @@ import { updateSysTem } from "../../store/sysTem";
 import classNames from 'classnames';
 
 const ApiSysTem: React.FC = () => {
+  const [messageApi, contextHolder] = message.useMessage();
   const cINdex = useSysTemStore((state) => state.currentEnv);
   const env = useSysTemStore((state) => state.env);
   const envList = listify(env, (_key, value) => ({ ...value })); // 将对象转换为数组
   const onActive = (e: number) => {
     updateCurrentEnv(e)
+    messageApi.open({
+      type: 'success',
+      content: '环境变量切换成功',
+    });
   }
   return <>
+    {contextHolder}
     {
       envList.map((item, index: number) => {
         return (

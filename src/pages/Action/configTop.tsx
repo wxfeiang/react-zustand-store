@@ -33,7 +33,7 @@ const CurrentText: React.FC<curentTextProps> = (props) => {
     <TextArea
       value={value}
       onChange={(e) => setValue(e.target.value)}
-      placeholder="输入JSON格式字符串即可"
+      placeholder='输入JSON格式字符串即可，例如: "{ "user": "admin"   }"'
       autoSize={{ minRows: 4, maxRows: 6 }}
     />
   </>
