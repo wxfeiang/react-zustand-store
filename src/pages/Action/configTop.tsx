@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import { Input } from 'antd';
 const { TextArea } = Input;
 import List from './list';
 import { useSysTemStore } from '@/store/sysTem';
-import { listify } from 'radash';
+
+import { QueryContext } from './tab';
+import OutherList from './outheList';
 
 const onChange = (key: string) => {
   console.log(key);
@@ -13,6 +15,12 @@ const onChange = (key: string) => {
 
 interface curentTextProps {
   update: (value: string) => void
+}
+interface outherDataType {
+  key: string
+  name: string
+  desc: string
+  status: boolean
 }
 
 const CurrentText: React.FC<curentTextProps> = (props) => {
@@ -37,11 +45,39 @@ const saveVale = (value: string) => {
 const ConfigTop: React.FC = () => {
   const { globalParams } = useSysTemStore();
 
-  const data = listify(globalParams, (_key, value) => ({ ...value, key: _key + '' })).filter((item) => item.position === 'Header')
+  const data = globalParams.filter((item) => item.position === 'Header')
   const [headerData, setHeaderData] = useState<typeof data>(data)
   const [bodyData, setBodyData] = useState<string>("")
   const [paramsData, setParamsData] = useState<string>("")
-
+  const [outherData, setOutherData] = useState<outherDataType[]>(
+    [
+      {
+        key: '1',
+        name: 'ignoreSign',
+        desc: '忽略签名',
+        status: false
+      },
+      {
+        key: '2',
+        name: 'ignorEencrypt',
+        desc: '忽略加密',
+        status: false
+      },
+      {
+        key: '3',
+        name: 'ignorToken',
+        desc: '忽略token',
+        status: false
+      },
+      {
+        key: '4',
+        name: 'initParams',
+        desc: '初始化参数',
+        status: false
+      }
+    ]
+  )
+  const queryContext = useContext(QueryContext); // 使用上下文
   const HeadersDataParams = (value: typeof data) => {
     setHeaderData(value)
   }
@@ -51,9 +87,13 @@ const ConfigTop: React.FC = () => {
   const updateBody = (value: string) => {
     setBodyData(value)
   }
+  const upOutherData = (value: outherDataType[]) => {
+    setOutherData(value)
+  }
   useEffect(() => {
-    console.log(headerData, paramsData, bodyData,); // 此时可以安全地使用最新的count值
-  }, [headerData, bodyData, paramsData]); // 依赖项数组包含count，确保每次count变化时都运行此effect
+    console.log(headerData, paramsData, bodyData); // 此时可以安全地使用最新的count值
+    queryContext.setParamsAllData({ headerData, paramsData, bodyData, outherData })
+  }, [headerData, bodyData, paramsData, outherData]); // 依赖项数组包含count，确保每次count变化时都运行此effect
 
   const items: TabsProps['items'] = [
     {
@@ -70,6 +110,11 @@ const ConfigTop: React.FC = () => {
       key: '3',
       label: 'Headers',
       children: <List data={data} update={HeadersDataParams} />,
+    },
+    {
+      key: '4',
+      label: '请求额外配置',
+      children: <OutherList data={outherData} update={upOutherData} />,
     },
   ];
 

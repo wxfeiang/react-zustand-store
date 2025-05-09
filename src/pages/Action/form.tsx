@@ -2,7 +2,8 @@
 import { Button, Input, Select, Space, Tooltip } from 'antd';
 import { useSysTemStore } from '@/store/sysTem';
 import { listify } from "radash";
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { QueryContext } from './tab';
 interface Props {
   name?: string
 }
@@ -30,19 +31,39 @@ const options = [
 const ActionForm: React.FC<Props> = () => {
   const env = useSysTemStore((state) => state.env);
   const envList = listify(env, (_key, value) => ({ ...value })); // 将对象转换为数组
+  const queryContext = useContext(QueryContext); // 使用上下文
+  const [url, setUrl] = useState<string>("")
+  const [method, setMethod] = useState<string>("POST")
+  const sendParams = () => {
+    console.log('🥘[queryContext]: ', queryContext.paramsAllData);
+
+  }
+  useEffect(() => {
+    queryContext.setParamsAllData({ ...queryContext.paramsAllData, url, method });
+  }, [url, method])
+
   return (
     <>
       <div className='flex gap-[10px] items-center'>
         <Space.Compact>
-          <Select defaultValue="POST" options={options} className='w-[120px]' />
-          <Input className='min-w-[500px]'
+          <Select defaultValue={method}
+            options={options}
+            className='w-[160px]'
+            onChange={(value) => setMethod(value)}
+          />
+          <Input
+            value={url}
+            className='min-w-[350px]'
+            onChange={(e) => setUrl(e.target.value)}
             prefix={
               <Tooltip title={envList[0].name}>
                 {envList[0].url}
               </Tooltip>
-            } />
+            }
+
+          />
         </Space.Compact>
-        <Button type="primary" > 发送</Button>
+        <Button type="primary" onClick={sendParams} disabled={url?.length === 0} > 发送</Button>
       </div>
 
     </>

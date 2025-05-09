@@ -10,6 +10,7 @@ interface IEnvConfig {
 }
 
 interface IGlobalParam {
+  key: string;
   name: string;
   value: string;
   position: 'Header' | 'Query' | 'Body'; // 常用的参数位置
@@ -20,11 +21,9 @@ interface IConfig {
   env: {
     [envName: string]: IEnvConfig; // 动态环境键名（如 dev/prod）
   };
-  globalParams: {  // 修正拼写：goloabaParams -> globalParams
-    [paramKey: string]: IGlobalParam;
-  };
+  globalParams: IGlobalParam[];
+  currentEnv: number
 }
-
 const initialState: IConfig = {
   env: {
     dev: {
@@ -40,22 +39,24 @@ const initialState: IConfig = {
       url: 'http://localhost:8888',
     },
   },
-  globalParams: {
-    Authorization: {
-
+  globalParams: [
+    {
+      key: 'Authorization',
       name: 'Authorization',
       value: "qingqiutoken",
       position: 'Header',
       status: true,
     },
-    skin: {
-
+    {
+      key: 'skin',
       name: 'skin',
       value: 'skin',
       position: 'Header',
       status: true,
     }
-  }
+  ],
+  currentEnv: 0
+
 };
 
 
@@ -66,11 +67,17 @@ const updateSysTem = (data: IEnvConfig) => useSysTemStore.setState((state) => {
   if (data.type === 'prod') {
     return { ...state, env: { ...state.env, prod: { ...state.env.prod, ...data } } }
   }
-
 })
 const updateGlobalParams = (data: IGlobalParam[]) => useSysTemStore.setState((state) => {
-  return { ...state, globalParams: { ...data } }
+  return { ...state, globalParams: [...data] }
 })
+const updateCurrentEnv = (data: number) => useSysTemStore.setState((state) => {
+  return { ...state, currentEnv: data }
+})
+
+const useGetParmas = (position: 'Header' | 'Query' | 'Body') => useSysTemStore((state) => {
+  return state.globalParams.filter(item => item.position === position && item.status === true)
+});
 
 const useSysTemStore = create<typeof initialState>()(
   immer(
@@ -87,4 +94,4 @@ const useSysTemStore = create<typeof initialState>()(
   ),
 );
 
-export { useSysTemStore, updateSysTem, updateGlobalParams }
+export { useSysTemStore, updateSysTem, updateGlobalParams, updateCurrentEnv, useGetParmas }

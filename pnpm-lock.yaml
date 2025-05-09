@@ -66,6 +66,9 @@ importers:
       auto-zustand-selectors-hook:
         specifier: ^3.0.1
         version: 3.0.1(zustand@5.0.3(@types/react@19.0.10)(immer@10.1.1)(react@19.0.0)(use-sync-external-store@1.4.0(react@19.0.0)))
+      classnames:
+        specifier: ^2.5.1
+        version: 2.5.1
       czg:
         specifier: ^1.11.1
         version: 1.11.1

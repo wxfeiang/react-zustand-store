@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import type { GetRef, InputRef, TableProps } from 'antd';
-import { Button, Form, Input, Select, Switch, Table, } from 'antd';
-import { DeleteOutlined } from '@ant-design/icons';
-import { uid } from "radash";
+import { Form, Input, Select, Switch, Table, } from 'antd';
 
 type FormInstance<T> = GetRef<typeof Form<T>>;
 
@@ -87,7 +85,7 @@ const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
               onBlur={save}
               options={[
                 { value: 'Header', label: 'Header' },
-                { value: 'Body', label: 'Body' },
+                { value: 'Body', label: 'Body', disabled: true },
                 { value: 'Query', label: 'Query', disabled: true },
                 { value: 'Cookle', label: 'Cookle', disabled: true },
               ]}
@@ -123,8 +121,7 @@ const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
 interface DataType {
   key: string;
   name: string;
-  value: string;
-  position: "Header" | "Body" | "Query";
+  desc: string;
   status: boolean;
 }
 
@@ -136,25 +133,17 @@ interface ListProps {
 
 }
 
-const List: React.FC<ListProps> = (props) => {
+const OutherList: React.FC<ListProps> = (props) => {
   const [dataSource, setDataSource] = useState<DataType[]>(props.data);
   const defaultColumns: (ColumnTypes[number] & { editable?: boolean; dataIndex: string })[] = [
     {
       title: '参数key',
       dataIndex: 'name',
       width: 200,
-      editable: true,
     },
     {
-      title: '入参位置',
-      dataIndex: 'position',
-      width: 200,
-      editable: true,
-    },
-    {
-      title: '默认值',
-      dataIndex: 'value',
-      editable: true,
+      title: '描述',
+      dataIndex: 'desc',
     },
     {
       title: '是否启用',
@@ -168,28 +157,21 @@ const List: React.FC<ListProps> = (props) => {
         />
       ),
     },
-    {
-      title: '操作',
-      dataIndex: 'operation',
-      width: 120,
-      render: (_, record) =>
-        dataSource.length >= 1 ? (
-          <DeleteOutlined className="color-[#eb2f96]" onClick={() => handleDelete(record.key)} />
-        ) : null,
-    },
+
   ];
-  const [count, setCount] = useState(uid(8));
-  const handleAdd = () => {
-    const newData: DataType = {
-      key: count,
-      name: `name ${count}`,
-      position: 'Header',
-      value: "val",
-      status: true,
-    };
-    setDataSource([...dataSource, newData]);
-    setCount(uid(8));
-  };
+  // const [count, setCount] = useState(uid(8));
+  // const handleAdd = () => {
+  //   const newData: DataType = {
+  //     key: count,
+  //     name: `name ${count}`,
+  //     position: 'Header',
+  //     value: "val",
+  //     status: true,
+  //   };
+  //   setDataSource([...dataSource, newData]);
+  //   setCount(uid(8));
+  //   props.update([...dataSource, newData]);
+  // };
   const handleSwitchChange = (check: boolean, row: DataType) => {
     row = { ...row, status: check }
     handleSave(row)
@@ -206,11 +188,11 @@ const List: React.FC<ListProps> = (props) => {
     // 存储到本地
     props.update(newData);
   };
-  const handleDelete = (key: React.Key) => {
-    const newData = dataSource.filter((item) => item.key !== key);
-    setDataSource(newData);
-    props.update(newData);
-  };
+  // const handleDelete = (key: React.Key) => {
+  //   const newData = dataSource.filter((item) => item.key !== key);
+  //   setDataSource(newData);
+  //   props.update(newData);
+  // };
 
   const components = {
     body: {
@@ -238,9 +220,7 @@ const List: React.FC<ListProps> = (props) => {
 
   return (
     <div>
-      <Button onClick={handleAdd} type="primary" style={{ marginBottom: 16 }}>
-        新增参数
-      </Button>
+
       <Table<DataType>
         components={components}
         rowClassName={() => 'editable-row'}
@@ -254,4 +234,4 @@ const List: React.FC<ListProps> = (props) => {
   );
 };
 
-export default List;
+export default OutherList;

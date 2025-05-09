@@ -7,22 +7,21 @@ interface Props {
   name: string
 }
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
-interface paramsAllDataType {
-  [key: string]: string
-}
+
 interface QueryContextProp {
-  paramsAllData: paramsAllDataType
-  setParamsAllData: (paramsAllData: string) => void;
+  paramsAllData: object
+  setParamsAllData: (paramsAllData: object) => void;
 }
-const QueryContext = React.createContext<QueryContextProp>({} as QueryContextProp);
+export const QueryContext = React.createContext<QueryContextProp>({} as QueryContextProp);
 const EditCenter: React.FC = () => {
-  const [paramsAllData, setParamsAllData] = useState()
+  const [paramsAllData, setParamsAllData] = useState({})
+
   return <>
     <QueryContext value={{ paramsAllData, setParamsAllData }}>
       <ActionForm />
       <Divider plain orientation="left" orientationMargin="0">请求数据配置</Divider>
       <ConfigTop />
-      <Divider plain orientation="left" orientationMargin="0">响应数据</Divider>
+      <Divider plain orientation="left" orientationMargin="0">请求响应数据</Divider>
     </QueryContext>
   </>
 }
