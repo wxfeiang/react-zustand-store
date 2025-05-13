@@ -12,6 +12,7 @@ const ApiSysTem: React.FC = () => {
   const env = useSysTemStore((state) => state.env);
   const envList = listify(env, (_key, value) => ({ ...value })); // 将对象转换为数组
   const onActive = (e: number) => {
+    if(cINdex === e)  return
     updateCurrentEnv(e)
     messageApi.open({
       type: 'success',

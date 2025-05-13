@@ -53,7 +53,7 @@ const ActionForm: React.FC<Props> = () => {
           />
           <Input
             value={url}
-            className='min-w-[350px]'
+            className='min-w-[700px]'
             onChange={(e) => setUrl(e.target.value)}
             prefix={
               <Tooltip title={envList[0].name}>
