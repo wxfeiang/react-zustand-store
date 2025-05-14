@@ -91,9 +91,9 @@ const ConfigTop: React.FC = () => {
     setOutherData(value)
   }
   useEffect(() => {
-    console.log(headerData, paramsData, bodyData); // 此时可以安全地使用最新的count值
+    console.log(headerData, paramsData, bodyData);
     queryContext.setParamsAllData({ headerData, paramsData, bodyData, outherData })
-  }, [headerData, bodyData, paramsData, outherData]); // 依赖项数组包含count，确保每次count变化时都运行此effect
+  }, [headerData, bodyData, paramsData, outherData]);
 
   const items: TabsProps['items'] = [
     {

@@ -13,6 +13,7 @@ import ApiSysTem from '@/pages/ApiSysTem';
 import About from '@/pages/About';
 import GolobalParams from '@/pages/GolobalParams';
 import Action from '@/pages/Action';
+import SysInit from '@/pages/SysInit';
 
 // 全局路由
 function globalRoute() {
@@ -84,6 +85,10 @@ function globalRoute() {
         {
           path: 'about',
           element: <About />,
+        },
+        {
+          path: 'sysinit',
+          element: <SysInit />,
         },
         {
           path: 'action',
