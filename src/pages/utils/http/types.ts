@@ -1,0 +1,47 @@
+/**
+ * 在 uniapp 的 RequestOptions 和 IUniUploadFileOptions 基础上，添加自定义参数
+ */
+export type CustomRequestOptions = {
+  query?: Record<string, any>
+  /** 出错时是否隐藏错误提示 */
+  hideErrorToast?: boolean
+}
+
+export interface HttpRequestResult<T> {
+  promise: Promise<T>
+  // requestTask: UniApp.RequestTask
+}
+
+// 通用响应格式
+export interface IResponse<T = any> {
+  code: number | string
+  data: T
+  message: string
+  status: string | number
+  msg?: string
+}
+
+// 分页请求参数
+export interface PageParams {
+  page: number
+  pageSize: number
+  [key: string]: any
+}
+
+// 分页响应数据
+export interface PageResult<T> {
+  list: T[]
+  total: number
+  page: number
+  pageSize: number
+}
+// interface dataResponse<T = any> {
+//   /** 响应消息 */
+//   msg: string
+//   /** 状态码 */
+//   code: number
+//   /** 响应数据 */
+//   data: T
+//   /** 时间戳 */
+//   ts: number
+// }
