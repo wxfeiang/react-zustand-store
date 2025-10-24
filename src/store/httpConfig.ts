@@ -30,9 +30,10 @@ const updateDot = (data: string) => useHttpconfigStore.setState((state) => {
 const updateFilterData = (data: STSCONFIG) => useHttpconfigStore.setState((state) => {
   return { ...state, filterData: data }
 })
-const initHttpconfigInfo = () => useHttpconfigStore.setState((state) => {
-  return !state.resstrppd || state.filterData || !state.dot
-})
+const initHttpconfigInfo = () => {
+  const { resstrppd, dot, filterData } = useHttpconfigStore.getState()
+  return resstrppd && dot && filterData ? true : false
+}
 
 const useHttpconfigStore = create<typeof initialState>()(
   immer(

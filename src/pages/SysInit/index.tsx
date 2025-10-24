@@ -9,6 +9,7 @@ import {
   updateFilterData,
   updateResstrppd,
   useHttpconfigStore,
+  initHttpconfigInfo,
 } from '@/store/httpConfig';
 interface listType {
   id: number;
@@ -46,11 +47,7 @@ const SysInit: React.FC = () => {
     },
   );
   const ActionsArr = () => {
-    return (
-      <div>
-        系统初始化{list.some((item) => item.result) ? '完成' : '未完成'}
-      </div>
-    );
+    return <div>系统初始化{initHttpconfigInfo() ? '完成' : '未完成'}</div>;
   };
   const columns: TableColumnType<listType>[] = [
     {
