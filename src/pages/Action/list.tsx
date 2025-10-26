@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import type { GetRef, InputRef, TableProps } from 'antd';
 import { Button, Form, Input, Select, Switch, Table, } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import { uid } from "radash";
+import { v4 as uuidv4 } from 'uuid';
 
 type FormInstance<T> = GetRef<typeof Form<T>>;
 
@@ -178,7 +178,7 @@ const List: React.FC<ListProps> = (props) => {
         ) : null,
     },
   ];
-  const [count, setCount] = useState(uid(8));
+  const [count, setCount] = useState(uuidv4());
   const handleAdd = () => {
     const newData: DataType = {
       key: count,
@@ -188,7 +188,7 @@ const List: React.FC<ListProps> = (props) => {
       status: true,
     };
     setDataSource([...dataSource, newData]);
-    setCount(uid(8));
+    setCount(uuidv4());
     props.update([...dataSource, newData]);
   };
   const handleSwitchChange = (check: boolean, row: DataType) => {

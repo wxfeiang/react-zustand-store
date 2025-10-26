@@ -159,7 +159,7 @@ const OutherList: React.FC<ListProps> = (props) => {
     },
 
   ];
-  // const [count, setCount] = useState(uid(8));
+  // const [count, setCount] = useState(uuidv4());
   // const handleAdd = () => {
   //   const newData: DataType = {
   //     key: count,
@@ -169,7 +169,7 @@ const OutherList: React.FC<ListProps> = (props) => {
   //     status: true,
   //   };
   //   setDataSource([...dataSource, newData]);
-  //   setCount(uid(8));
+  //   setCount(uuidv4());
   //   props.update([...dataSource, newData]);
   // };
   const handleSwitchChange = (check: boolean, row: DataType) => {

@@ -1,8 +1,9 @@
 import { Button, Input, Select, Space, Tooltip } from 'antd';
 import { useSysTemStore } from '@/store/sysTem';
-import { listify } from 'radash';
+import { toArray } from 'lodash-es';
 import React, { useContext, useEffect, useState } from 'react';
 import { QueryContext } from './tab';
+import { method } from './types';
 interface Props {
   name?: string;
 }
@@ -29,20 +30,24 @@ const options = [
 
 const ActionForm: React.FC<Props> = () => {
   const env = useSysTemStore((state) => state.env);
-  const envList = listify(env, (_key, value) => ({ ...value })); // 将对象转换为数组
+  const  envList = toArray(env)
   const queryContext = useContext(QueryContext); // 使用上下文
-  const [url, setUrl] = useState<string>('');
-  const [method, setMethod] = useState<string>('POST');
+
+  const [url, setUrl] = useState('');  // 修改url的类型声明
+  const [method, setMethod] = useState<method>('POST');
+
   const sendParams = () => {
     console.log('🥘[queryContext]: ', queryContext.paramsAllData);
+    // 最终调用请求，分发数据
+
   };
   useEffect(() => {
     queryContext.setParamsAllData({
       ...queryContext.paramsAllData,
       url,
-      method,
+      method,  // 添加类型断言
     });
-  }, [url, method]);
+  }, [url, method],);
 
   return (
     <>

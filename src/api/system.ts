@@ -1,5 +1,5 @@
 import { http } from '@/pages/utils/http/alova'
-
+import { paramsAllData } from '@/pages/Action/types';
 
 export interface IFoo {
   id: number
@@ -14,6 +14,34 @@ export function sysinitInfo(url: string) {
       resAll: true,
     },
   })
+}
+
+export function actionInfo(paramsAllData: paramsAllData) {
+  const { bodyData: data,
+    url, method,
+    paramsData: params,
+    outherData: meta,
+    // headerData: headers
+  } = paramsAllData
+  if (method === "GET") {
+    return http.Post(url, data, {
+      params,
+      meta: {
+        ...meta,
+        resAll: true,
+      },
+    })
+  }
+  if (method === "POST") {
+    return http.Post(url, data, {
+      params,
+      meta: {
+        ...meta,
+        resAll: true,
+      },
+    })
+  }
+
 }
 
 

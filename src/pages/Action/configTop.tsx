@@ -8,6 +8,7 @@ import { useSysTemStore } from '@/store/sysTem';
 
 import { QueryContext } from './tab';
 import OutherList from './outheList';
+import { outherDataType } from './types';
 
 const onChange = (key: string) => {
   console.log(key);
@@ -16,12 +17,7 @@ const onChange = (key: string) => {
 interface curentTextProps {
   update: (value: string) => void
 }
-interface outherDataType {
-  key: string
-  name: string
-  desc: string
-  status: boolean
-}
+
 
 const CurrentText: React.FC<curentTextProps> = (props) => {
   const [value, setValue] = useState('');
@@ -77,6 +73,7 @@ const ConfigTop: React.FC = () => {
       }
     ]
   )
+  //TODO: 对入参类型进行约束修改
   const queryContext = useContext(QueryContext); // 使用上下文
   const HeadersDataParams = (value: typeof data) => {
     setHeaderData(value)
@@ -92,7 +89,12 @@ const ConfigTop: React.FC = () => {
   }
   useEffect(() => {
     console.log(headerData, paramsData, bodyData);
-    queryContext.setParamsAllData({ headerData, paramsData, bodyData, outherData })
+    queryContext.setParamsAllData({
+      headerData, paramsData, bodyData, outherData,
+      url: queryContext.paramsAllData.url,
+      method: queryContext.paramsAllData.method,
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [headerData, bodyData, paramsData, outherData]);
 
   const items: TabsProps['items'] = [

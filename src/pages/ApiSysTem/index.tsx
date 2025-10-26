@@ -2,14 +2,14 @@ import React from 'react';
 import { Card, message } from 'antd';
 import List from './list';
 import { updateCurrentEnv, useSysTemStore, updateSysTem } from '@/store/sysTem';
-import { listify } from 'radash';
+import {toArray} from 'lodash-es';
 import classNames from 'classnames';
 
 const ApiSysTem: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const cINdex = useSysTemStore((state) => state.currentEnv);
   const env = useSysTemStore((state) => state.env);
-  const envList = listify(env, (_key, value) => ({ ...value })); // 将对象转换为数组
+  const  envList = toArray(env)
   const onActive = (e: number) => {
     if (cINdex === e) return;
     updateCurrentEnv(e);

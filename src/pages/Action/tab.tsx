@@ -1,20 +1,22 @@
 import { Divider, Tabs } from 'antd';
 import React, { useState } from 'react'
 import ActionForm from './form';
-import { uid } from 'radash';
+import { v4 as uuidv4 } from 'uuid';
 import ConfigTop from './configTop';
+import { paramsAllData } from './types';
 interface Props {
   name: string
 }
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
 
 interface QueryContextProp {
-  paramsAllData: object
-  setParamsAllData: (paramsAllData: object) => void;
+  paramsAllData: paramsAllData
+  setParamsAllData: (paramsAllData: paramsAllData) => void;
 }
+// eslint-disable-next-line react-refresh/only-export-components
 export const QueryContext = React.createContext<QueryContextProp>({} as QueryContextProp);
 const EditCenter: React.FC = () => {
-  const [paramsAllData, setParamsAllData] = useState({})
+  const [paramsAllData, setParamsAllData] = useState<paramsAllData>({} as paramsAllData)
 
   return <>
     <QueryContext value={{ paramsAllData, setParamsAllData }}>
@@ -31,7 +33,7 @@ const ActionTab: React.FC<Props> = ({ name }) => {
     {
       label: name,
       children: <EditCenter />,
-      key: uid(8)
+      key: uuidv4()
     },
   ];
   const [activeKey, setActiveKey] = useState(initialItems[0].key);
@@ -43,7 +45,7 @@ const ActionTab: React.FC<Props> = ({ name }) => {
   };
 
   const add = () => {
-    const newActiveKey = uid(8)
+    const newActiveKey = uuidv4()
     const newPanes = [...items];
     newPanes.push({
       label: 'New Tab',

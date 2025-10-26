@@ -5,7 +5,7 @@ import Login from '@/pages/Login';
 import Home from '@/pages/Home';
 import Zustand from '@/pages/Zustand';
 import Main from '@/pages/Main';
-import System from '@/pages/SysTem'
+import System from '@/pages/system'
 import History from '@/pages/History';
 
 import Entryfox from '@/pages/entryfox';
@@ -26,7 +26,12 @@ function globalRoute() {
       element: <Login />,
     },
     {
-      // 未匹配"/login"，则进入到Entry页面
+      // 精确匹配"/main"，跳转Main页面
+      path: '/main',
+      element: <Main />,
+    },
+    {
+      // 未匹配以上路径，则进入到Entry页面
       path: '/',
       element: (
         // 懒加载过程中先使用Spin组件占位
@@ -38,11 +43,11 @@ function globalRoute() {
       children: [
         {
           // 精确匹配"/home"，跳转Home页面
-          path: '/home',
+          path: 'home',  // 使用相对路径
           element: <Home />,
         },
         {
-          path: '/zustand',
+          path: 'zustand',  // 使用相对路径
           element: <Zustand />,
         },
         {
@@ -53,10 +58,6 @@ function globalRoute() {
       ],
     },
     {
-      path: '/main',
-      element: <Main />,
-    },
-    {
       path: '/api',
       element: (
         // 懒加载过程中先使用Spin组件占位
@@ -64,12 +65,15 @@ function globalRoute() {
           <div className='size-full flex justify-center align-center'>
             <Spin />
           </div>
-
         } >
           <Entryfox />
         </Suspense>
       ),
       children: [
+        {
+          index: true,  // 默认子路由
+          element: <Navigate to="globalParams" />,
+        },
         {
           path: 'history',
           element: <History />,
