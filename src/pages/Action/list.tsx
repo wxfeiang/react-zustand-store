@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import type { GetRef, InputRef, TableProps } from 'antd';
-import { Button, Form, Input, Select, Switch, Table, } from 'antd';
+import { Button, Form, Input, Select, Switch, Table } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
 
 type FormInstance<T> = GetRef<typeof Form<T>>;
-
 
 const EditableContext = React.createContext<FormInstance<Item> | null>(null);
 
@@ -16,7 +15,6 @@ interface Item {
   position: string;
   status: boolean;
 }
-
 
 const EditableRow: React.FC<Item> = ({ ...props }) => {
   const [form] = Form.useForm();
@@ -85,6 +83,7 @@ const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
             <Select
               onChange={save}
               onBlur={save}
+              disabled
               options={[
                 { value: 'Header', label: 'Header' },
                 { value: 'Body', label: 'Body', disabled: true },
@@ -93,7 +92,7 @@ const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
               ]}
             />
           </Form.Item>
-        )
+        );
       } else {
         childNode = (
           <Form.Item
@@ -101,9 +100,14 @@ const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
             name={dataIndex}
             rules={[{ required: true, message: `${title} is required.` }]}
           >
-            <Input ref={inputRef} onPressEnter={save} onBlur={save} placeholder='请输入' />
+            <Input
+              ref={inputRef}
+              onPressEnter={save}
+              onBlur={save}
+              placeholder="请输入"
+            />
           </Form.Item>
-        )
+        );
       }
     } else {
       childNode = (
@@ -114,7 +118,7 @@ const EditableCell: React.FC<React.PropsWithChildren<EditableCellProps>> = ({
         >
           {children}
         </div>
-      )
+      );
     }
   }
   return <td {...restProps}>{childNode}</td>;
@@ -124,7 +128,7 @@ interface DataType {
   key: string;
   name: string;
   value: string;
-  position: "Header" | "Body" | "Query";
+  position: 'Header' | 'Body' | 'Query';
   status: boolean;
 }
 
@@ -133,12 +137,14 @@ type ColumnTypes = Exclude<TableProps<DataType>['columns'], undefined>;
 interface ListProps {
   data: DataType[];
   update: (data: DataType[]) => void;
-
 }
 
 const List: React.FC<ListProps> = (props) => {
   const [dataSource, setDataSource] = useState<DataType[]>(props.data);
-  const defaultColumns: (ColumnTypes[number] & { editable?: boolean; dataIndex: string })[] = [
+  const defaultColumns: (ColumnTypes[number] & {
+    editable?: boolean;
+    dataIndex: string;
+  })[] = [
     {
       title: '参数key',
       dataIndex: 'name',
@@ -163,7 +169,8 @@ const List: React.FC<ListProps> = (props) => {
       render: (_, record) => (
         <Switch
           checked={record.status}
-          checkedChildren="是" unCheckedChildren="否"
+          checkedChildren="是"
+          unCheckedChildren="否"
           onChange={(checked) => handleSwitchChange(checked, record)}
         />
       ),
@@ -174,7 +181,10 @@ const List: React.FC<ListProps> = (props) => {
       width: 120,
       render: (_, record) =>
         dataSource.length >= 1 ? (
-          <DeleteOutlined className="color-[#eb2f96]" onClick={() => handleDelete(record.key)} />
+          <DeleteOutlined
+            className="color-[#eb2f96]"
+            onClick={() => handleDelete(record.key)}
+          />
         ) : null,
     },
   ];
@@ -184,7 +194,7 @@ const List: React.FC<ListProps> = (props) => {
       key: count,
       name: `name ${count}`,
       position: 'Header',
-      value: "val",
+      value: 'val',
       status: true,
     };
     setDataSource([...dataSource, newData]);
@@ -192,9 +202,9 @@ const List: React.FC<ListProps> = (props) => {
     props.update([...dataSource, newData]);
   };
   const handleSwitchChange = (check: boolean, row: DataType) => {
-    row = { ...row, status: check }
-    handleSave(row)
-  }
+    row = { ...row, status: check };
+    handleSave(row);
+  };
   const handleSave = (row: DataType) => {
     const newData = [...dataSource];
     const index = newData.findIndex((item) => row.key === item.key);
@@ -221,7 +231,6 @@ const List: React.FC<ListProps> = (props) => {
   };
 
   const columns = defaultColumns.map((col) => {
-
     if (!col.editable) {
       return col;
     }

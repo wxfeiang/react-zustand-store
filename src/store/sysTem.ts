@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { persist, subscribeWithSelector } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
+import { filter, map, merge } from 'lodash-es';
+
 
 
 interface IEnvConfig {
@@ -47,13 +49,6 @@ const initialState: IConfig = {
       position: 'Header',
       status: true,
     },
-    {
-      key: 'skin',
-      name: 'skin',
-      value: 'skin',
-      position: 'Header',
-      status: true,
-    }
   ],
   currentEnv: 0
 
@@ -75,10 +70,10 @@ const updateCurrentEnv = (data: number) => useSysTemStore.setState((state) => {
   return { ...state, currentEnv: data }
 })
 
-const useGetParmas = (position: 'Header' | 'Query' | 'Body') => useSysTemStore((state) => {
-  return state.globalParams.filter(item => item.position === position && item.status === true)
-});
-
+const getGlobalParmas = (position: 'Header' | 'Query' | 'Body') => {
+  const state = useSysTemStore.getState()
+  return merge({}, ...map(filter(state.globalParams, { position, status: true }), (item => ({ [item.key]: item.value }))))
+}
 const useSysTemStore = create<typeof initialState>()(
   immer(
     subscribeWithSelector(
@@ -94,4 +89,4 @@ const useSysTemStore = create<typeof initialState>()(
   ),
 );
 
-export { useSysTemStore, updateSysTem, updateGlobalParams, updateCurrentEnv, useGetParmas }
+export { useSysTemStore, updateSysTem, updateGlobalParams, updateCurrentEnv, getGlobalParmas }

@@ -6,95 +6,88 @@ const { TextArea } = Input;
 import List from './list';
 import { useSysTemStore } from '@/store/sysTem';
 
-import { QueryContext } from './tab';
+import { QueryContext } from './queryContext';
 import OutherList from './outheList';
 import { outherDataType } from './types';
-
-const onChange = (key: string) => {
-  console.log(key);
-};
-
 interface curentTextProps {
-  update: (value: string) => void
+  update: (value: string) => void;
 }
-
 
 const CurrentText: React.FC<curentTextProps> = (props) => {
   const [value, setValue] = useState('');
   useEffect(() => {
-    saveVale(value);
     props.update(value);
   }, [value]);
-  return <>
-    <TextArea
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
-      placeholder='输入JSON格式字符串即可，例如: "{ "user": "admin"   }"'
-      autoSize={{ minRows: 4, maxRows: 6 }}
-    />
-  </>
-}
-const saveVale = (value: string) => {
-  console.log('value===>>>', value);
-}
+  return (
+    <>
+      <TextArea
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder='输入JSON格式字符串即可，例如: "{ "user": "admin"   }"'
+        autoSize={{ minRows: 4, maxRows: 6 }}
+      />
+    </>
+  );
+};
 
 const ConfigTop: React.FC = () => {
   const { globalParams } = useSysTemStore();
 
-  const data = globalParams.filter((item) => item.position === 'Header')
-  const [headerData, setHeaderData] = useState<typeof data>(data)
-  const [bodyData, setBodyData] = useState<string>("")
-  const [paramsData, setParamsData] = useState<string>("")
-  const [outherData, setOutherData] = useState<outherDataType[]>(
-    [
-      {
-        key: '1',
-        name: 'ignoreSign',
-        desc: '忽略签名',
-        status: false
-      },
-      {
-        key: '2',
-        name: 'ignorEencrypt',
-        desc: '忽略加密',
-        status: false
-      },
-      {
-        key: '3',
-        name: 'ignorToken',
-        desc: '忽略token',
-        status: false
-      },
-      {
-        key: '4',
-        name: 'initParams',
-        desc: '初始化参数',
-        status: false
-      }
-    ]
-  )
+  const data = globalParams.filter((item) => item.position === 'Header');
+  const [headerData, setHeaderData] = useState<typeof data>(data);
+  const [bodyData, setBodyData] = useState<string>('');
+  const [paramsData, setParamsData] = useState<string>('');
+  const [outherData, setOutherData] = useState<outherDataType[]>([
+    {
+      key: '1',
+      name: 'ignoreSign',
+      desc: '忽略签名',
+      status: false,
+    },
+    {
+      key: '2',
+      name: 'ignorEencrypt',
+      desc: '忽略加密',
+      status: false,
+    },
+    {
+      key: '3',
+      name: 'ignorToken',
+      desc: '忽略token',
+      status: false,
+    },
+    {
+      key: '4',
+      name: 'initParams',
+      desc: '初始化参数',
+      status: false,
+    },
+  ]);
   //TODO: 对入参类型进行约束修改
   const queryContext = useContext(QueryContext); // 使用上下文
   const HeadersDataParams = (value: typeof data) => {
-    setHeaderData(value)
-  }
+    setHeaderData(value);
+  };
   const updatePrams = (value: string) => {
-    setParamsData(value)
-  }
+    setParamsData(value);
+  };
   const updateBody = (value: string) => {
-    setBodyData(value)
-  }
+    setBodyData(value);
+  };
   const upOutherData = (value: outherDataType[]) => {
-    setOutherData(value)
-  }
+    setOutherData(value);
+  };
   useEffect(() => {
     console.log(headerData, paramsData, bodyData);
     queryContext.setParamsAllData({
-      headerData, paramsData, bodyData, outherData,
+      headerData,
+      paramsData,
+      bodyData,
+      outherData,
       url: queryContext.paramsAllData.url,
       method: queryContext.paramsAllData.method,
-    })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [headerData, bodyData, paramsData, outherData]);
 
   const items: TabsProps['items'] = [
@@ -120,9 +113,7 @@ const ConfigTop: React.FC = () => {
     },
   ];
 
-  return (
-    <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-  );
+  return <Tabs defaultActiveKey="1" items={items} />;
 };
 
 export default ConfigTop;

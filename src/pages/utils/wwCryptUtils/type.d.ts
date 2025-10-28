@@ -48,7 +48,7 @@ interface ResponseHeader {
 }
 
 interface ResponseData {
-  header: ResponseHeader;
+  headers: ResponseHeader;
   data: string;
 }
 

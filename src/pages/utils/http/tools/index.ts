@@ -2,6 +2,7 @@ import type { IResponse } from '../types'
 import dayjs from 'dayjs'
 import qs from 'qs'
 import { useHttpconfigStore } from '@/store/httpConfig'
+import { getGlobalParmas } from '@/store/sysTem'
 import { v4 as uuidv4 } from 'uuid';
 
 import { WwCryptUtils } from '../../wwCryptUtils/'
@@ -40,46 +41,26 @@ export function beforeRequest(method: any) {
     showGlobalLoading(method.meta?.loadingText)
 
   }
-  console.log('🥥', useHttpconfigStore.getState());
   const CryptUtils = new WwCryptUtils(useHttpconfigStore.getState())
   // 设置默认 Content-Type
   config.headers = {
-    ContentType: ContentTypeEnum.JSON,
+    "content-type": ContentTypeEnum.JSON,
     Accept: 'application/json, text/plain, */*',
+    ...getGlobalParmas("Header"),
     ...method.config.headers,
   }
-
   // 处理动态域名多服务
   method.baseURL = resolveApiUrl(config.meta?.otherServiceUrl)
-  // 处理token
-  if (!method?.meta?.ignorToken) {
-    // token 可能是对象
-    const token = {
-      a: 1,
-      b: 1,
-    }
-    method.config.headers = { ...method.config.headers, ...token }
-  }
-  // 其他Headers
-  if (config.meta?.headers) {
-    method.config.headers = { ...method.config.headers, ...config.meta.headers }
-  }
-
-  // const userStore = useUserStore()
-  // FIX: 可根据实际情况变更  初始化参数
+  // 处理默认Headers
+  // if (!method?.meta?.ignorToken) {
+  //   method.config.headers = { , ...method.config.headers, }
+  // }
+  // 处理默认参数（全局）
   const initParams = {
-    appKey: 'ceshi ',
     timestamp: dayjs().valueOf(),
     replay: uuidv4(),
-    // userId: userStore.userInfo.userDId,
-    // userDId: userStore.userInfo.userDId,
-    // phone: userStore.userInfo.userPhone,
-    // merchantId: userStore.userInfo.merchantId,
-    // cardId: userStore.userInfo.cardId,
-    terminal: '当前终端',
+    terminald: 'H5',
   }
-  // 默认参数
-
   if (!config.meta?.initParams) {
     // 处理URL的参数合并
     const urlParas = qs.parse(method.url, { ignoreQueryPrefix: true })
@@ -100,12 +81,10 @@ export function beforeRequest(method: any) {
       }
     }
   }
-  if (!config.meta?.ignoreSign) {
-    config.headers.sign = method.type === 'GET' ? CryptUtils.createSign(method.params) : CryptUtils.createSign(method.data)
-  }
-  else {
-    config.headers.sign = ''
-  }
+
+  config.headers.sign = config.meta?.ignoreSign ?
+    '' :
+    CryptUtils.createSign(method.type === 'GET' ? method.params : method.data)
   // 非白名单
   if (!config.meta?.ignorEencrypt && !CryptUtils.isReleaseWhitelist(method.url)) {
     CryptUtils.requestInit(method)
@@ -118,10 +97,7 @@ export function beforeRequest(method: any) {
  * @param {object} method:Method - 请求方法对象，包含请求配置、返回信息解密
  */
 export async function afterResponse(response: any, method: any) {
-  console.log('🥓[response]:', response);
-  if (!method.meta?.loading) {
-    showGlobalLoading(method.meta?.loadingText)
-  }
+  console.log('[response]==>>>:', response);
   const CryptUtils = new WwCryptUtils(useHttpconfigStore.getState())
   const { config } = method
   const { requestType, meta } = config
@@ -148,19 +124,22 @@ export async function afterResponse(response: any, method: any) {
 
   // 不加密 data
   if (meta?.noEencryptData || meta?.ignorEencrypt || CryptUtils.isReleaseWhitelist(method.url)) {
-    return data
+    response.data = data
+    return response
   }
   if (data?.code && data?.code * 1 !== ResultEnum.Success200) {
-    return showGloablToast(data.msg, config.meta?.Tips)
+    showGloablToast(data.msg, config.meta?.Tips)
+    return response
   }
 
   // 加密 data
   const resEencryptData = CryptUtils.resultDecryption(response)
   if (resEencryptData?.code !== ResultEnum.Success200) {
-    return showGloablToast(data?.msg || '请求失败!', config.meta?.Tips)
+    showGloablToast(data?.msg || '请求失败!', config.meta?.Tips)
+    return response
   }
-
-  return resEencryptData.data
+  response.data = resEencryptData.data
+  return response
 }
 
 /**

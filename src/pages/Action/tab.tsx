@@ -1,56 +1,75 @@
-import { Divider, Tabs } from 'antd';
-import React, { useState } from 'react'
+import { Divider, Spin, Splitter, Tabs } from 'antd';
+import React, { useState } from 'react';
 import ActionForm from './form';
 import { v4 as uuidv4 } from 'uuid';
 import ConfigTop from './configTop';
 import { paramsAllData } from './types';
+import { QueryContext } from './queryContext';
+import { useRequest } from 'alova/client';
+import { actionInfo } from './acitonApi';
+import Resalt from './resalt';
 interface Props {
-  name: string
+  name: string;
 }
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
 
-interface QueryContextProp {
-  paramsAllData: paramsAllData
-  setParamsAllData: (paramsAllData: paramsAllData) => void;
-}
-// eslint-disable-next-line react-refresh/only-export-components
-export const QueryContext = React.createContext<QueryContextProp>({} as QueryContextProp);
 const EditCenter: React.FC = () => {
-  const [paramsAllData, setParamsAllData] = useState<paramsAllData>({} as paramsAllData)
+  const [paramsAllData, setParamsAllData] = useState<paramsAllData>(
+    {} as paramsAllData,
+  );
 
-  return <>
-    <QueryContext value={{ paramsAllData, setParamsAllData }}>
-      <ActionForm />
-      <Divider plain orientation="left" orientationMargin="0">请求数据配置</Divider>
-      <ConfigTop />
-      <Divider plain orientation="left" orientationMargin="0">请求响应数据</Divider>
-    </QueryContext>
-  </>
-}
+  // 获取所有的数据分发
+
+  const { send, loading, data } = useRequest((data) => actionInfo(data)!, {
+    immediate: false,
+  });
+  return (
+    <>
+      <Spin spinning={loading} tip="加载中...">
+        <Splitter layout="vertical">
+          <Splitter.Panel defaultSize={300}>
+            <QueryContext value={{ paramsAllData, setParamsAllData }}>
+              <ActionForm update={() => send(paramsAllData)} />
+              <Divider plain orientation="left" orientationMargin="0">
+                请求数据配置
+              </Divider>
+              <ConfigTop />
+            </QueryContext>
+          </Splitter.Panel>
+          <Splitter.Panel defaultSize={500}>
+            <Divider plain orientation="left" orientationMargin="0">
+              请求响应数据
+            </Divider>
+            <Resalt data={data} />
+          </Splitter.Panel>
+        </Splitter>
+      </Spin>
+    </>
+  );
+};
 
 const ActionTab: React.FC<Props> = ({ name }) => {
   const initialItems = [
     {
       label: name,
       children: <EditCenter />,
-      key: uuidv4()
+      key: uuidv4(),
     },
   ];
   const [activeKey, setActiveKey] = useState(initialItems[0].key);
   const [items, setItems] = useState(initialItems);
-
 
   const onChange = (newActiveKey: string) => {
     setActiveKey(newActiveKey);
   };
 
   const add = () => {
-    const newActiveKey = uuidv4()
+    const newActiveKey = uuidv4();
     const newPanes = [...items];
     newPanes.push({
       label: 'New Tab',
       children: <EditCenter />,
-      key: newActiveKey
+      key: newActiveKey,
     });
     setItems(newPanes);
     setActiveKey(newActiveKey);

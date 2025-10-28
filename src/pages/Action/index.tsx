@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import ActionTab from './tab';
 import { Card } from 'antd';
 const Action: React.FC = () => {
-  const [name] = useState('接口一')
+  const [name] = useState('接口一');
   useEffect(() => {
-    console.log('执行了',)
-  }, [])
+    console.log('执行了');
+  }, []);
 
   return (
     <>
-      <Card variant="borderless" >
+      <Card variant="borderless" className="min-h-90vh">
         <ActionTab name={name}></ActionTab>
       </Card>
-
     </>
   );
 };

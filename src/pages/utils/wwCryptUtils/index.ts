@@ -63,8 +63,8 @@ export class WwCryptUtils extends Methods {
    */
   resultDecryption(res: ResponseData): DecryptedResult {
     // 从响应头中获取加密的响应密钥和初始化向量尝试获取不同大小写的头部字段名
-    const aesResKey = res.header.responsek ?? res.header.ResponseK
-    const aesResIv = res.header.responsev ?? res.header.Responsev
+    const aesResKey = res.headers?.responsek
+    const aesResIv = res.headers?.responsev
     // 检查解密结果是否为空，如果为空则返回错误信息
     if (!aesResKey || !aesResIv) {
       return { msg: '数据提示:系统解密异常!' }

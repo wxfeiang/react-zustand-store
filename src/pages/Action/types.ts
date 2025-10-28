@@ -16,12 +16,12 @@ interface IGlobalParam {
   status: boolean;
 }
 interface paramsAllData {
-  bodyData?: objData[] | string,
+  bodyData?: string,
   headerData?: IGlobalParam[],
   url: string,
   method: method
   outherData: outherDataType[]
-  paramsData?: objData[] | string
+  paramsData?: string
 
 }
-export type { paramsAllData, method, outherDataType, IGlobalParam }
+export type { paramsAllData, method, outherDataType, IGlobalParam, objData }

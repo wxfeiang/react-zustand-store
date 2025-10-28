@@ -52,7 +52,10 @@ const alovaInstance = createAlova({
   requestAdapter: axiosRequestAdapter(),
   timeout: 5000,
   beforeRequest: onAuthRequired(method => beforeRequest(method)),
-  responded: onResponseRefreshToken((response, method) => afterResponse(response, method)),
+  responded: onResponseRefreshToken({
+    onSuccess: (response, method) => afterResponse(response, method),
+    onError: (error) => error
+  }),
 })
 
 export const http = alovaInstance
